@@ -5,10 +5,12 @@ import Heyblock0712.hNLib.listeners.MenuListener;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Main extends JavaPlugin {
+public final class HNLib extends JavaPlugin {
+    private static JavaPlugin instance;
 
     @Override
     public void onEnable() {
+        instance = this;
         // Plugin startup logic
         PluginCommand hnlibCommand = getCommand("hnlib");
         if (hnlibCommand != null) {
@@ -20,6 +22,11 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        instance = null;
         // Plugin shutdown logic
+    }
+
+    public static JavaPlugin getInstance() {
+        return instance;
     }
 }
