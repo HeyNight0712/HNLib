@@ -31,9 +31,15 @@ public abstract class Menu implements InventoryHolder {
         playerMenuUtil.getOwner().openInventory(inventory);
     }
 
+    public void close() {
+        playerMenuUtil.getOwner().closeInventory();
+    }
+
     @Override
     @NotNull
     public Inventory getInventory() {
         return inventory;
     }
+
+
 }

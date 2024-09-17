@@ -1,6 +1,6 @@
 name: HNLib
-version: '0.0.1'
-main: Heyblock0712.hNLib.Main
+version: '0.0.2'
+main: Heyblock0712.hNLib.HNLib
 api-version: '1.21'
 authors: [ HN ]
 description: is MinecraftHUD WAILA

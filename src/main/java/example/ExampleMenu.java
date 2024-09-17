@@ -1,6 +1,7 @@
 package example;
 
 import Heyblock0712.hNLib.inventory.menu.Menu;
+import Heyblock0712.hNLib.inventory.menu.MenuItem;
 import Heyblock0712.hNLib.inventory.menu.PlayerMenuUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -26,11 +27,18 @@ public class ExampleMenu extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent event) {
         // Write your inventory events
+        ItemStack clickItem = event.getCurrentItem();
+        if (clickItem == null) return;
+        String key = MenuItem.getKey(clickItem);
+        if (key == null) return;
+
+        close();
+        playerMenuUtil.getOwner().sendMessage("你關閉了選單");
     }
 
     @Override
     public void setMenuItem() {
-        ItemStack itemExample = new ItemStack(Material.NAME_TAG);
+        ItemStack itemExample = MenuItem.createItem("example", Material.NAME_TAG);
         ItemMeta itemExampleMeta = itemExample.getItemMeta();
         itemExampleMeta.displayName(Component.text("Example Item"));
         itemExample.setItemMeta(itemExampleMeta);
