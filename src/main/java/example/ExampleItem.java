@@ -3,8 +3,8 @@ package example;
 import Heyblock0712.hNLib.inventory.item.SkullItem;
 import org.bukkit.inventory.ItemStack;
 
-public class ItemExample {
-    private ItemExample() {}
+public class ExampleItem {
+    private ExampleItem() {}
 
     private void getSkull() {
 

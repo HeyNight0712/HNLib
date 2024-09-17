@@ -1,4 +1,4 @@
-package Heyblock0712.hNLib.commands;
+package Heyblock0712.hNLib.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +12,7 @@ public class HNLibCommand implements CommandExecutor {
         if (!(commandSender instanceof Player player)) return false;
 
         player.sendMessage("This is just a test command");
+
         return true;
     }
 }

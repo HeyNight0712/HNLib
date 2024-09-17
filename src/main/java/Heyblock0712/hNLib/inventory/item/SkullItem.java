@@ -1,4 +1,4 @@
-package Heyblock0712.hNLib.inventory;
+package Heyblock0712.hNLib.inventory.item;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonObject;
