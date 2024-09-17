@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ExampleMenu extends Menu {
+
     public ExampleMenu(PlayerMenuUtil playerMenuUtil) {
         super(playerMenuUtil);
     }
