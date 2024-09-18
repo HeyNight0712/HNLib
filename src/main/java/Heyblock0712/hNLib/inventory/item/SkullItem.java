@@ -1,5 +1,8 @@
 package Heyblock0712.hNLib.inventory.item;
 
+import Heyblock0712.hNLib.HNLib;
+import Heyblock0712.hNLib.data.HNNamespacedKey;
+import Heyblock0712.hNLib.utils.ItemStackUtil;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.profile.PlayerTextures;
 
 import java.net.URI;
@@ -30,19 +34,23 @@ public class SkullItem {
     }
 
     public static ItemStack fromBase64(String base64) {
-        byte[] bytes = Base64.getDecoder().decode(base64);
-        String json = new String(bytes, StandardCharsets.UTF_8);
-
-        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-        JsonObject texturesObject = jsonObject.getAsJsonObject("textures");
-        JsonObject skinObject = texturesObject.getAsJsonObject("SKIN");
-        String url = skinObject.get("url").getAsString();
+        String url = getUrlFormBase64(base64);
 
         if (skulls.containsKey(url)) {
             return skulls.get(url).clone();
         }
 
         return getSkull(url);
+    }
+
+    public static String getUrlFormBase64(String base64) {
+        byte[] bytes = Base64.getDecoder().decode(base64);
+        String json = new String(bytes, StandardCharsets.UTF_8);
+
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        JsonObject texturesObject = jsonObject.getAsJsonObject("textures");
+        JsonObject skinObject = texturesObject.getAsJsonObject("SKIN");
+        return skinObject.get("url").getAsString();
     }
 
     private static ItemStack getSkull(String url) {
@@ -57,16 +65,25 @@ public class SkullItem {
         try {
             textures.setSkin(new URI(url).toURL());
         } catch (Exception e) {
-            e.printStackTrace();
+            HNLib.getInstance().getLogger().warning("Failed to set skull textures for " + url);
             return null;
         }
 
         profile.setTextures(textures);
         skullMeta.setPlayerProfile(profile);
+        skullMeta.getPersistentDataContainer().set(HNNamespacedKey.SKULL.get(), PersistentDataType.STRING, getTextures(url));
         skull.setItemMeta(skullMeta);
 
         skulls.put(getTextures(url), skull);
         return skull;
+    }
+
+    public static boolean has(ItemStack item) {
+        return !ItemStackUtil.has(item, HNNamespacedKey.SKULL.get());
+    }
+
+    public static String get(ItemStack item) {
+        return ItemStackUtil.get(item, HNNamespacedKey.SKULL.get());
     }
 
     private static String getTextures(String url) {

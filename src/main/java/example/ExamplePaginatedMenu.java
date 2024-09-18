@@ -1,7 +1,8 @@
 package example;
 
 import Heyblock0712.hNLib.HNLib;
-import Heyblock0712.hNLib.inventory.menu.MenuItem;
+import Heyblock0712.hNLib.data.HNNamespacedKey;
+import Heyblock0712.hNLib.utils.ItemStackUtil;
 import Heyblock0712.hNLib.inventory.menu.PaginatedMenu;
 import Heyblock0712.hNLib.inventory.menu.PlayerMenuUtil;
 import net.kyori.adventure.text.Component;
@@ -46,17 +47,17 @@ public class ExamplePaginatedMenu extends PaginatedMenu {
         Player player = playerMenuUtil.getOwner();
 
         if (item == null) return;
-        if (!MenuItem.hasKey(item)) return;
+        if (!ItemStackUtil.has(item, HNNamespacedKey.MENUITEM.get())) return;
         event.setCancelled(true);
 
-        if (MenuItem.hasKey(item, ownerKey)) {
-            String value = Objects.requireNonNull(MenuItem.getKey(item, ownerKey), "未知");
+        if (ItemStackUtil.has(item, ownerKey)) {
+            String value = Objects.requireNonNull(ItemStackUtil.get(item, ownerKey), "未知");
             player.sendMessage(Component.text("你點擊了 " + value));
             close();
             return;
         }
 
-        String key = MenuItem.getKey(item);
+        String key = ItemStackUtil.get(item, HNNamespacedKey.MENUITEM.get());
         if (key == null) return;
 
         if (key.equals(super.left)) {
@@ -80,7 +81,7 @@ public class ExamplePaginatedMenu extends PaginatedMenu {
     public void setMenuItem() {
         ItemStack left = getLeftPageItem(Material.STONE_BUTTON);
         ItemStack right = getRightPageItem(Material.STONE_BUTTON);
-        ItemStack fill = MenuItem.createFillItem(Material.BLACK_STAINED_GLASS_PANE);
+        ItemStack fill = createFillItem(Material.BLACK_STAINED_GLASS_PANE);
 
         inventory.setItem(48, left);
         inventory.setItem(50, right);
@@ -114,7 +115,7 @@ public class ExamplePaginatedMenu extends PaginatedMenu {
             if (players.get(index) != null) {
                 String uuid = players.get(index).toString();
 
-                ItemStack item = MenuItem.createItem("player", Material.PLAYER_HEAD);
+                ItemStack item = createMenuItem("player", Material.PLAYER_HEAD);
                 ItemMeta meta = item.getItemMeta();
                 meta.displayName(Component.text(uuid));
                 meta.getPersistentDataContainer().set(ownerKey, PersistentDataType.STRING, uuid);

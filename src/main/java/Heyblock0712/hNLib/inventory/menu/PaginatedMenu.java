@@ -18,10 +18,10 @@ public abstract class PaginatedMenu extends Menu {
     public abstract int getMaxItemPerPage();
 
     public ItemStack getLeftPageItem(Material material) {
-        return MenuItem.createItem(left, material);
+        return createMenuItem(left, material);
     }
 
     public ItemStack getRightPageItem(Material material) {
-        return MenuItem.createItem(right, material);
+        return createMenuItem(right, material);
     }
 }

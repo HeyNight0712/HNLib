@@ -1,7 +1,8 @@
 package example;
 
+import Heyblock0712.hNLib.data.HNNamespacedKey;
 import Heyblock0712.hNLib.inventory.menu.Menu;
-import Heyblock0712.hNLib.inventory.menu.MenuItem;
+import Heyblock0712.hNLib.utils.ItemStackUtil;
 import Heyblock0712.hNLib.inventory.menu.PlayerMenuUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -30,7 +31,7 @@ public class ExampleMenu extends Menu {
         // Write your inventory events
         ItemStack clickItem = event.getCurrentItem();
         if (clickItem == null) return;
-        String key = MenuItem.getKey(clickItem);
+        String key = ItemStackUtil.get(clickItem, HNNamespacedKey.MENUITEM.get());
         if (key == null) return;
 
         close();
@@ -39,7 +40,7 @@ public class ExampleMenu extends Menu {
 
     @Override
     public void setMenuItem() {
-        ItemStack itemExample = MenuItem.createItem("example", Material.NAME_TAG);
+        ItemStack itemExample = createMenuItem("example", Material.NAME_TAG);
         ItemMeta itemExampleMeta = itemExample.getItemMeta();
         itemExampleMeta.displayName(Component.text("Example Item"));
         itemExample.setItemMeta(itemExampleMeta);

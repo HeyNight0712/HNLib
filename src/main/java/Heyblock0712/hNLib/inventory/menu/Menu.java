@@ -1,10 +1,15 @@
 package Heyblock0712.hNLib.inventory.menu;
 
+import Heyblock0712.hNLib.data.HNNamespacedKey;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Menu implements InventoryHolder {
@@ -41,5 +46,23 @@ public abstract class Menu implements InventoryHolder {
         return inventory;
     }
 
+    public ItemStack createMenuItem(String id, Material material, int amount) {
+        ItemStack item = new ItemStack(material, amount);
+        ItemMeta meta = item.getItemMeta();
+        meta.getPersistentDataContainer().set(HNNamespacedKey.MENUITEM.get(), PersistentDataType.STRING, id);
+        item.setItemMeta(meta);
+        return item;
+    }
 
+    public ItemStack createMenuItem(String id, Material material) {
+        return createMenuItem(id, material, 1);
+    }
+
+    public ItemStack createFillItem(Material material) {
+        ItemStack item = createMenuItem("fill_item", material, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.text(" "));
+        item.setItemMeta(meta);
+        return item;
+    }
 }

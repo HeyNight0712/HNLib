@@ -4,9 +4,10 @@ import Heyblock0712.hNLib.HNLib;
 import org.bukkit.NamespacedKey;
 
 public enum HNNamespacedKey {
-    MENU;
+    MENUITEM,
+    SKULL;
 
-    public static NamespacedKey get(HNNamespacedKey key) {
-        return new NamespacedKey(HNLib.getInstance(), key.name());
+    public NamespacedKey get() {
+        return new NamespacedKey(HNLib.getInstance(), name());
     }
 }
