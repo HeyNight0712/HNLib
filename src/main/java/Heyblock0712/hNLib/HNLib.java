@@ -1,7 +1,7 @@
 package Heyblock0712.hNLib;
 
-import Heyblock0712.hNLib.command.HNLibCommand;
 import Heyblock0712.hNLib.listeners.MenuListener;
+import example.command.ExampleCommandGroup;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,7 +14,7 @@ public final class HNLib extends JavaPlugin {
         // Plugin startup logic
         PluginCommand hnlibCommand = getCommand("hnlib");
         if (hnlibCommand != null) {
-            hnlibCommand.setExecutor(new HNLibCommand());
+            hnlibCommand.setExecutor(new ExampleCommandGroup(this));
         }
 
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
